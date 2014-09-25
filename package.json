@@ -2,7 +2,7 @@
   "name": "stripe-fire",
   "version": "0.0.0",
   "description": "uses firebase to trigger stripe api calls",
-  "main": "index.js",
+  "main": "lib/stripe-fire.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

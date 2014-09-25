@@ -28,5 +28,7 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "should": "~4.0.4"
+  }
 }

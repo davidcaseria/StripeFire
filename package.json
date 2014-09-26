@@ -4,7 +4,7 @@
   "description": "uses firebase to trigger stripe api calls",
   "main": "lib/stripe-fire.js",
   "scripts": {
-    "test": "mocha"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "test": "test"
   },
   "devDependencies": {
+    "mocha": "^1.21.4",
     "should": "^4.0.4"
   }
 }

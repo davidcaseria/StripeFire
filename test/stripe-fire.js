@@ -7,6 +7,7 @@ describe('StripeFire', function () {
     var stripeFire = require('../lib/stripe-fire.js')('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
 
     describe('charges', function () {
+
         before(function (done) {
             stripe.tokens.create({
                 card: {
@@ -37,18 +38,26 @@ describe('StripeFire', function () {
             (stripeFire.charges).should.be.a.Function;
         });
 
+        var charges;
         it('should process a charge', function (done) {
-            stripeFire.charges('https://stripe-fire.firebaseio.com/charges', null, null, done);
-        });
-    });
-
-    describe('customers', function () {
-        it('should exist', function () {
-            (typeof stripeFire.customers !== 'undefined').should.be.true;
+            charges = stripeFire.charges('https://stripe-fire.firebaseio.com/charges', done);
         });
 
-        it('should be a function', function () {
-            (stripeFire.customers).should.be.a.Function;
+        describe('refunds', function () {
+
+            it('should exist', function () {
+                (typeof charges.refunds !== 'undefined').should.be.true;
+            });
+
+            it('should be a function', function () {
+                (charges.refunds).should.be.a.Function;
+            });
+
+            /*
+            it('should process a refund', function (done) {
+                charges.refunds('https://stripe-fire.firebaseio.com/refunds', done);
+            });
+            */
         });
     });
 });

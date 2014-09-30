@@ -66,7 +66,7 @@ describe('Customers', function () {
                                 cvc: '123'
                             }
                         }, function(err, token) {
-                            ref.child('cards').child(customersRef.name()).push({
+                            ref.child('cards').child(customersRef.name()).set({
                                 card: token.id
                             }, function () {
                                 done();

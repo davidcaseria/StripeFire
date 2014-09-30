@@ -58,7 +58,7 @@ describe('Charges', function () {
                         currency: 'usd',
                         card: token.id
                     }, function () {
-                        ref.child('refunds').child(chargeRef.name()).push({
+                        ref.child('refunds').child(chargeRef.name()).set({
                             amount: 400
                         }, function () {
                             done();

@@ -193,7 +193,7 @@ stripeFire.plans("https://stripe-fire.firebaseio.com/plans", function(err, plan)
 }, "ACCESS_TOKEN", function(planData) {
     // Called before a create plan request is sent to Stripe
     // IMPORTANT: since id is reserved for retrieving objects this cannot be set in Firebase before being sent to Stripe
-    plan.id = plan.name;
+    planData.id = planData.name;
     return planData;
 });
 ```

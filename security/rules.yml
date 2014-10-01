@@ -1,0 +1,62 @@
+functions:
+  - isUser(uid): auth.uid === uid
+
+schema:
+  type: object
+  properties:
+    
+    charges:
+      type: object
+      $charge:
+        type: object
+        constraint: (!prev.exists())
+    
+    coupons:
+      type: object
+      $coupon:
+        type: object
+        constraint: (!prev.exists())
+    
+    customers:
+      type: object
+      $customer:
+        type: object
+        constraint: (!prev.exists())
+    
+    plans:
+      type: object
+      $plan:
+        type: object
+        constraint: (!prev.exists())
+    
+    refunds:
+      type: object
+      $refund:
+        type: object
+        constraint: (!prev.exists())
+    
+access:
+  # Each charge should have a customer id to reference for security
+  - location: /charges/$charge
+    read:     root['charges'][$charge].customer === root['customers'][auth.uid].id
+    write:    root['charges'][$charge].customer === root['customers'][auth.uid].id
+  
+  # Usually it's best to keep coupons secret
+  - location: /coupons
+    read:     false
+    write:    false
+  
+  # Assumes customers are stored using Simple Login uids
+  - location: /customers/$customer
+    read:     isUser($customer)
+    write:    isUser($customer)
+  
+  # Plans can be kept as read only
+  - location: /plans
+    read:     true
+    write:    false
+  
+  # Refunds should be only granted via Firebase secret
+  - location: /refunds
+    read:     false
+    write:    false

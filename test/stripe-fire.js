@@ -9,7 +9,15 @@ describe('StripeFire', function () {
         stripeFire.should.have.property('charges');
     });
     
+    it('should have a coupons property', function() {
+        stripeFire.should.have.property('coupons');
+    });
+    
     it('should have a customers property', function() {
         stripeFire.should.have.property('customers');
+    });
+    
+    it('should have a plans property', function() {
+        stripeFire.should.have.property('plans');
     });
 });

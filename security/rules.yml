@@ -5,41 +5,51 @@ schema:
   type: object
   properties:
     
+    cards:
+      type: object
+      $card:
+        type: object
+    
     charges:
       type: object
       $charge:
         type: object
-        constraint: (!prev.exists())
     
     coupons:
       type: object
       $coupon:
         type: object
-        constraint: (!prev.exists())
     
     customers:
       type: object
       $customer:
         type: object
-        constraint: (!prev.exists())
     
     plans:
       type: object
       $plan:
         type: object
-        constraint: (!prev.exists())
     
     refunds:
       type: object
       $refund:
         type: object
-        constraint: (!prev.exists())
+    
+    subscriptions:
+      type: object
+      $subscription:
+        type: object
     
 access:
-  # Each charge should have a customer id to reference for security
+  # A charge can have a customer id to reference
   - location: /charges/$charge
-    read:     root['charges'][$charge].customer === root['customers'][auth.uid].id
-    write:    root['charges'][$charge].customer === root['customers'][auth.uid].id
+    read:     next.customer === root['customers'][auth.uid].id
+    write:    next.exists() && !prev.exists()
+  
+  # A card should have the same name as a customer
+  - location: /cards/$card
+    read:     isUser($card)
+    write:    isUser($card) && next.exists() && !prev.exists()
   
   # Usually it's best to keep coupons secret
   - location: /coupons
@@ -60,3 +70,8 @@ access:
   - location: /refunds
     read:     false
     write:    false
+  
+  # A subscription should have the same name as a customer
+  - location: /subscriptions/$subscription
+    read:     isUser($subscription)
+    write:    isUser($subscription) && next.exists() && !prev.exists()

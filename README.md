@@ -6,8 +6,9 @@
 A Node.js module that handles Stripe API calls when data is added to a Firebase reference.
 
 StripeFire uses the following APIs:
-* [Stripe API](https://stripe.com/docs/api/node)
-* [Firebase API](https://www.firebase.com/docs/web/api/)
+
+- [Stripe API](https://stripe.com/docs/api/node)
+- [Firebase API](https://www.firebase.com/docs/web/api/)
 
 ## Installation
 
@@ -22,10 +23,11 @@ $ npm install stripe-fire
 A `StripeFire` object is used to store Firebase references for Stripe API objects for a specific Stripe account. The Stripe account is identified by the private key.
 
 Each object accepts `ref`, `callback`, `accessToken`, and `alterRequest` parameters.
-* `ref` *(required)*: An instance of a Firebase object or a string that points to a Firbase reference
-* `callback` *(optional)*: A function which is called **after** a child is added to the specified reference *and* the API request is sent to Stripe; the function accepts two parameters: an error object and the Stripe object if the request is successful
-* `accessToken` *(optional)*: A string or function which returns an access token to be sent with the Stripe API request (used for Stripe Connect); the function accepts one parameter: the data set in the Firebase child
-* `alterRequest` *(optional)*: A function which is called **before** a request is sent to Stripe; the function accepts one parameter: the data set in the Firebase child
+
+- `ref` *(required)*: An instance of a Firebase object or a string that points to a Firbase reference
+- `callback` *(optional)*: A function which is called **after** a child is added to the specified reference *and* the API request is sent to Stripe; the function accepts two parameters: an error object and the Stripe object if the request is successful
+- `accessToken` *(optional)*: A string or function which returns an access token to be sent with the Stripe API request (used for Stripe Connect); the function accepts one parameter: the data set in the Firebase child
+- `alterRequest` *(optional)*: A function which is called **before** a request is sent to Stripe; the function accepts one parameter: the data set in the Firebase child
 
 The reference should contain children which are all similar Stripe objects. Note the children names can be anything so long as they exist in parent objects.
 For example, a refund child named `order1234` should have a corresponding charge child named `order1234`. This allows StripeFire to be agnostic about Stripe object ids.
@@ -207,4 +209,26 @@ plansRef.push({
     name: "name",
     currency: "usd"
 });
+```
+
+## Security Reference
+
+Make sure to secure Firebase with the proper rules to protect the Stripe data. Checkout the [Firebase Security API](https://www.firebase.com/docs/security/) for more details.
+
+To easily get started building Firebase rules you can use the [Blaze Security Compiler](https://www.firebase.com/docs/security/).
+
+```bash
+$ npm install blaze_compiler 
+```
+A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate.
+
+## Contributing
+
+If you'd like to contribute to StripeFire, you'll need to run the following commands to get your environment set up:
+
+```bash
+$ git clone https://github.com/davidcaseria/StripeFire.git
+$ cd StripeFire          # go to the StripeFire directory
+$ npm install -g mocha   # globally install mocha test framework
+$ npm install            # locally install all dependencies
 ```

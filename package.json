@@ -1,6 +1,6 @@
 {
   "name": "stripe-fire",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Node.js module that handles Stripe API calls when data is added to a Firebase reference.",
   "main": "lib/stripe-fire.js",
   "scripts": {

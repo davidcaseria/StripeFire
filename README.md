@@ -24,7 +24,7 @@ A `StripeFire` object is used to store Firebase references for Stripe API object
 
 Each object accepts `ref`, `callback`, `accessToken`, and `alterRequest` parameters.
 
-- `ref` *(required)*: An instance of a Firebase object or a string that points to a Firbase reference
+- `ref` *(required)*: An instance of a Firebase object or a string that points to a Firebase reference
 - `callback` *(optional)*: A function which is called **after** a child is added to the specified reference *and* the API request is sent to Stripe; the function accepts two parameters: an error object and the Stripe object if the request is successful
 - `accessToken` *(optional)*: A string or function which returns an access token to be sent with the Stripe API request (used for Stripe Connect); the function accepts one parameter: the data set in the Firebase child
 - `alterRequest` *(optional)*: A function which is called **before** a request is sent to Stripe; the function accepts one parameter: the data set in the Firebase child

@@ -3,19 +3,19 @@
 [![Build Status](https://travis-ci.org/davidcaseria/StripeFire.svg?branch=master)](https://travis-ci.org/davidcaseria/StripeFire)
 [![NPM version](https://badge.fury.io/js/stripe-fire.svg)](http://badge.fury.io/js/stripe-fire)
 
-A Node.js module that handles Stripe API calls when data is added to a Firebase reference.
+A Node.js module that handles Stripe API calls for Firebase references.
 
 StripeFire uses the following APIs:
 
 - [Stripe API](https://stripe.com/docs/api/node)
 - [Firebase API](https://www.firebase.com/docs/web/api/)
 
-## Installation
+## Getting Started
 
-To install StripeFire, run the following command:
+Install the module with: `npm install stripe-fire`
 
-```bash
-$ npm install stripe-fire
+```js
+var stripeFire = require('stripe-fire')('your stripe private key');
 ```
 
 ## API Reference
@@ -50,7 +50,7 @@ var stripeFire = require("stripe-fire")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 Initializes and returns a `Charges` object.
 
 *Example:*
-```JavaScript
+```js
 var charges = stripeFire.charges("https://stripe-fire.firebaseio.com/charges", function(err, charge) {
     // Called after a create charge request is sent to Stripe
 }, "ACCESS_TOKEN", function(chargeData) {
@@ -60,7 +60,7 @@ var charges = stripeFire.charges("https://stripe-fire.firebaseio.com/charges", f
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var chargesRef = new Firebase("https://stripe-fire.firebaseio.com/charges");
 chargesRef.push({
     amount: 400,
@@ -74,7 +74,7 @@ chargesRef.push({
 Initializes a `Refunds` object which is a descendant of the `Charges` object. The charge with the same name as the refund will be retrieved from Stripe and saved under the `Charges` object reference.
 
 *Example:*
-```JavaScript
+```js
 charges.refunds("https://stripe-fire.firebaseio.com/refunds", function(err, refund) {
     // Called after a create refund request is sent to Stripe
 }, "ACCESS_TOKEN", function(refundData) {
@@ -84,7 +84,7 @@ charges.refunds("https://stripe-fire.firebaseio.com/refunds", function(err, refu
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var refundsRef = new Firebase("https://stripe-fire.firebaseio.com/refunds");
 //"ChargeName" should exist as a child in the charges reference
 refundsRef.child("ChargeName").set({
@@ -97,7 +97,7 @@ refundsRef.child("ChargeName").set({
 Initializes a `Coupons` object.
 
 *Example:*
-```JavaScript
+```js
 stripeFire.coupons("https://stripe-fire.firebaseio.com/coupons", function(err, coupon) {
     // Called after a create coupon request is sent to Stripe
 }, "ACCESS_TOKEN", function(couponData) {
@@ -107,7 +107,7 @@ stripeFire.coupons("https://stripe-fire.firebaseio.com/coupons", function(err, c
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var couponsRef = new Firebase("https://stripe-fire.firebaseio.com/coupons");
 couponsRef.push({
     percent_off: 25,
@@ -121,7 +121,7 @@ couponsRef.push({
 Initializes and returns a `Customers` object.
 
 *Example:*
-```JavaScript
+```js
 var customers = stripeFire.customers("https://stripe-fire.firebaseio.com/customers", function(err, customer) {
     // Called after a create customer request is sent to Stripe
 }, "ACCESS_TOKEN", function(customerData) {
@@ -131,7 +131,7 @@ var customers = stripeFire.customers("https://stripe-fire.firebaseio.com/custome
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var customersRef = new Firebase("https://stripe-fire.firebaseio.com/customers");
 customersRef.push({
     card: "token"
@@ -143,7 +143,7 @@ customersRef.push({
 Initializes a `Cards` object which is a descendant of the `Customers` object. The customer with the same name as the card's parent will be retrieved from Stripe and saved under the `Customers` object reference.
 
 *Example:*
-```JavaScript
+```js
 customers.cards("https://stripe-fire.firebaseio.com/cards", function(err, card) {
     // Called after a create card request is sent to Stripe
 }, "ACCESS_TOKEN", function(cardData) {
@@ -153,7 +153,7 @@ customers.cards("https://stripe-fire.firebaseio.com/cards", function(err, card) 
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var cardsRef = new Firebase("https://stripe-fire.firebaseio.com/cards");
 //"CustomerName" should exist as a child in the customers reference
 cardsRef.child("CustomerName").set({
@@ -166,7 +166,7 @@ cardsRef.child("CustomerName").set({
 Initializes a `Subscriptions` object which is a descendant of the `Customers` object. The customer with the same name as the subscription's parent will be retrieved from Stripe and saved under the `Customers` object reference.
 
 *Example:*
-```JavaScript
+```js
 customers.subscriptions("https://stripe-fire.firebaseio.com/subscriptions", function(err, subscription) {
     // Called after a create subscription request is sent to Stripe
 }, "ACCESS_TOKEN", function(subscriptionData) {
@@ -176,7 +176,7 @@ customers.subscriptions("https://stripe-fire.firebaseio.com/subscriptions", func
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var subscriptionsRef = new Firebase("https://stripe-fire.firebaseio.com/subscriptions");
 //"CustomerName" should exist as a child in the customers reference
 subscriptionsRef.child("CustomerName").set({
@@ -189,7 +189,7 @@ subscriptionsRef.child("CustomerName").set({
 Initializes a `Plans` object.
 
 *Example:*
-```JavaScript
+```js
 stripeFire.plans("https://stripe-fire.firebaseio.com/plans", function(err, plan) {
     // Called after a create plan request is sent to Stripe
 }, "ACCESS_TOKEN", function(planData) {
@@ -201,7 +201,7 @@ stripeFire.plans("https://stripe-fire.firebaseio.com/plans", function(err, plan)
 ```
 
 *Client-Side Usage:*
-```JavaScript
+```js
 var plansRef = new Firebase("https://stripe-fire.firebaseio.com/plans");
 plansRef.push({
     amount: 2000,
@@ -211,24 +211,24 @@ plansRef.push({
 });
 ```
 
+
 ## Security Reference
 
 Make sure to secure Firebase with the proper rules to protect the Stripe data. Checkout the [Firebase Security API](https://www.firebase.com/docs/security/) for more details.
 
 To easily get started building Firebase rules you can use the [Blaze Security Compiler](https://www.firebase.com/docs/security/).
 
-```bash
-$ npm install blaze_compiler 
-```
+Install the Blaze Security Compiler with: `npm install -g blaze_compiler`
+
 A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate.
+
 
 ## Contributing
 
-If you'd like to contribute to StripeFire, you'll need to run the following commands to get your environment set up:
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
 
-```bash
-$ git clone https://github.com/davidcaseria/StripeFire.git
-$ cd StripeFire          # go to the StripeFire directory
-$ npm install -g mocha   # globally install mocha test framework
-$ npm install            # locally install all dependencies
-```
+
+## License
+
+Copyright (c) 2014 David Caseria
+Licensed under the MIT license.

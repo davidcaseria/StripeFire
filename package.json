@@ -1,44 +1,44 @@
 {
-    "name": "stripe-fire",
-    "version": "0.3.0",
-    "main": "lib/stripe-fire.js",
-    "description": "A Node.js module that handles Stripe API calls for Firebase references.",
-    "homepage": "https://github.com/davidcaseria/StripeFire",
-    "bugs": "https://github.com/davidcaseria/stripe-fire/issues",
-    "author": {
-        "name": "Dave",
-        "email": "davidcaseria@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/davidcaseria/stripe-fire"
-    },
-    "license": "MIT",
-    "files": [
-        "lib"
-    ],
-    "keywords": [
-        "stripe-fire",
-        "stripe",
-        "firebase",
-        "payments",
-        "credit cards"
-    ],
-    "devDependencies": {
-        "grunt-contrib-jshint": "^0.10.0",
-        "grunt-contrib-nodeunit": "^0.3.3",
-        "grunt-contrib-watch": "^0.6.1",
-        "load-grunt-tasks": "^0.4.0",
-        "time-grunt": "^0.3.1",
-        "grunt-mocha-cli": "^1.9.0",
-        "jshint-stylish": "^0.2.0"
-    },
-    "scripts": {
-        "test": "grunt"
-    },
-    "dependencies": {
-        "firebase": "^1.1.1",
-        "sha1": "^1.1.0",
-        "stripe": "^2.8.0"
-    }
+  "name": "stripe-fire",
+  "version": "0.3.0",
+  "main": "lib/stripe-fire.js",
+  "description": "A Node.js module that handles Stripe API calls for Firebase references.",
+  "homepage": "https://github.com/davidcaseria/StripeFire",
+  "bugs": "https://github.com/davidcaseria/stripe-fire/issues",
+  "author": {
+    "name": "Dave",
+    "email": "davidcaseria@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidcaseria/stripe-fire"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "stripe-fire",
+    "stripe",
+    "firebase",
+    "payments",
+    "credit cards"
+  ],
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-cli": "^1.9.0",
+    "jshint-stylish": "^0.2.0",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "dependencies": {
+    "firebase": "^1.1.1",
+    "sha1": "^1.1.0",
+    "stripe": "^2.8.0"
+  }
 }

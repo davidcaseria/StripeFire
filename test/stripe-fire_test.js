@@ -1,24 +1,23 @@
 /*global describe,it*/
 'use strict';
 var assert = require('assert'),
-    stripeFire = require('../lib/stripe-fire.js');
+    stripeFire = require('../lib/stripe-fire.js')('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
 
 describe('StripeFire', function () {
-    var stripeFire = require('../lib/stripe-fire.js')('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
 
     it('should have a charges property', function () {
-        stripeFire.should.have.property('charges');
+        assert.ok(stripeFire.charges);
     });
 
     it('should have a coupons property', function () {
-        stripeFire.should.have.property('coupons');
+        assert.ok(stripeFire.coupons);
     });
 
     it('should have a customers property', function () {
-        stripeFire.should.have.property('customers');
+        assert.ok(stripeFire.customers);
     });
 
     it('should have a plans property', function () {
-        stripeFire.should.have.property('plans');
+        assert.ok(stripeFire.plans);
     });
 });

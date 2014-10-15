@@ -12,7 +12,9 @@ StripeFire uses the following APIs:
 
 ## Getting Started
 
-Install the module with: `npm install stripe-fire`
+Install the module: `npm install stripe-fire`
+
+Require in Node.js file:
 
 ```js
 var stripeFire = require('stripe-fire')('your stripe private key');

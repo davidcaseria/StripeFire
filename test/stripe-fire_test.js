@@ -47,22 +47,20 @@ describe('StripeFire', function() {
             chargeTest++;
             var ref = new Firebase('https://stripe-fire.firebaseio.com/charges/test-' + chargeTest);
             createToken(function(err, token) {
-                ref.push({
-                    amount: 400,
-                    currency: 'usd',
-                    card: token.id
-                }, done);
+                if(err) {
+                    done(err);
+                } else {
+                    ref.push({
+                        amount: 400,
+                        currency: 'usd',
+                        card: token.id
+                    }, done);
+                }
             });
         });
         
         it('should create a charge', function(done) {
-            stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-1', function(err) {
-                /*console.log(err);
-                console.log(charge.id);
-                console.log(action);
-                console.log(childSnapshot.name());*/
-                done(err);
-            });
+            stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-1', done);
         });
         
         /*it('should update a charge', function(done) {

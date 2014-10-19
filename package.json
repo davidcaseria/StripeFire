@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "firebase": "^1.1.1",
-    "sha1": "^1.1.0",
-    "stripe": "^2.8.0"
+    "stripe": "^2.8.0",
+    "hash-object": "~0.1.7"
   }
 }

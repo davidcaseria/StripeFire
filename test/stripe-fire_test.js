@@ -18,6 +18,7 @@ var createToken = function(callback) {
 };
 
 describe('StripeFire', function() {
+    this.timeout(5000);
     
     before(function(done) {
         var ref = new Firebase('https://stripe-fire.firebaseio.com');
@@ -63,20 +64,190 @@ describe('StripeFire', function() {
             stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-1', done);
         });
         
-        /*it('should update a charge', function(done) {
-            stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-2', function(err, charge, action, childSnapshot) {
+        it('should update a charge', function(done) {
+            stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-2', function(err) {
                 if(err) {
                     done(err);
-                } else if (action === 'create') {
-                    var ref = new Firebase('https://stripe-fire.firebaseio.com/charges/test-2/' + childSnapshot.name());
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/charges/test-2/' + this.childSnapshot.name());
                     ref.update({
                         description: 'Updating description'
                     });
-                } else  {
+                } else if(this.action === 'update') {
                     done();
                 }
             });
-        });*/
+        });
+        
+        describe('Refunds', function() {
+            
+            it('should refund a charge', function(done) {
+                var charges = stripeFire.charges('https://stripe-fire.firebaseio.com/charges/test-3', function(err) {
+                    if(err) {
+                        done(err);
+                    } else if (this.action === 'create') {
+                        var ref = new Firebase('https://stripe-fire.firebaseio.com/refunds/test-3/' + this.childSnapshot.name());
+                        ref.set({
+                            amount: 400
+                        }, function(err) {
+                            if(err) {
+                                done(err);
+                            } else {
+                                charges.refunds('https://stripe-fire.firebaseio.com/refunds/test-3', done);
+                            }
+                        });
+                    }
+                });
+            });
+            
+        });
+        
+    });
+    
+    describe('Coupons', function() {
+        
+        var couponTest = 0;
+        beforeEach(function(done) {
+            couponTest++;
+            var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-' + couponTest);
+            ref.push({
+                percent_off: 25,
+                duration: 'repeating',
+                duration_in_months: 3
+            }, done);
+        });
+        
+        it('should create a coupon', function(done) {
+            stripeFire.coupons('https://stripe-fire.firebaseio.com/coupons/test-1', done);
+        });
+        
+        it('should update a coupon', function(done) {
+            stripeFire.coupons('https://stripe-fire.firebaseio.com/coupons/test-2', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-2/' + this.childSnapshot.name());
+                    ref.update({
+                        metadata: {
+                            key: 'value'
+                        }
+                    });
+                } else if(this.action === 'update') {
+                    done();
+                }
+            });
+        });
+        
+    });
+    
+    describe('Customers', function() {
+        
+        var customerTest = 0;
+        beforeEach(function(done) {
+            customerTest++;
+            var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-' + customerTest);
+            createToken(function(err, token) {
+                if(err) {
+                    done(err);
+                } else {
+                    ref.push({
+                        card: token.id
+                    }, done);
+                }
+            });
+        });
+        
+        it('should create a customer', function(done) {
+            stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-1', done);
+        });
+        
+        it('should update a customer', function(done) {
+            stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-2', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-2/' + this.childSnapshot.name());
+                    ref.update({
+                        description: 'Updating description'
+                    });
+                } else if(this.action === 'update') {
+                    done();
+                }
+            });
+        });
+        
+        describe('Cards', function() {
+            
+            it('should create a card for a customer', function(done) {
+                var customers = stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-3', function(err) {
+                    if(err) {
+                        done(err);
+                    } else if (this.action === 'create') {
+                        var ref = new Firebase('https://stripe-fire.firebaseio.com/cards/test-3/' + this.childSnapshot.name());
+                        createToken(function(err, token) {
+                            if(err) {
+                                done(err);
+                            } else {
+                                ref.set({
+                                    card: token.id
+                                }, function(err) {
+                                    if(err) {
+                                        done(err);
+                                    } else {
+                                        customers.cards('https://stripe-fire.firebaseio.com/cards/test-3', done);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            
+        });
+        
+    });
+    
+    describe('Plans', function() {
+        
+        var planTest = 0;
+        beforeEach(function(done) {
+            planTest++;
+            var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-' + planTest);
+            var planRef = ref.push();
+            planRef.set({
+                amount: 2000,
+                interval: 'month',
+                name: planRef.name(),
+                currency: 'usd'
+            }, done);
+        });
+        
+        it('should create a plan', function(done) {
+            stripeFire.plans('https://stripe-fire.firebaseio.com/plans/test-1', done, null, function(plan) {
+                plan.id = plan.name;
+                return plan;
+            });
+        });
+        
+        it('should update a plan', function(done) {
+            stripeFire.plans('https://stripe-fire.firebaseio.com/plans/test-2', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-2/' + this.childSnapshot.name());
+                    ref.update({
+                        metadata: {
+                            key: 'value'
+                        }
+                    });
+                } else if(this.action === 'update') {
+                    done();
+                }
+            }, null, function(plan) {
+                plan.id = plan.name;
+                return plan;
+            });
+        });
         
     });
     

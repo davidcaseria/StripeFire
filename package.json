@@ -38,7 +38,7 @@
     "test": "grunt"
   },
   "dependencies": {
-    "firebase": "^1.1.1",
+    "firebase": "~1.1.2",
     "stripe": "^2.8.0",
     "hash-object": "~0.1.7"
   }

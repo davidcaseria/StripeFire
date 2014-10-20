@@ -18,7 +18,7 @@ var createToken = function(callback) {
 };
 
 describe('StripeFire', function() {
-    this.timeout(5000);
+    this.timeout(15000);
     
     before(function(done) {
         var ref = new Firebase('https://stripe-fire.firebaseio.com');

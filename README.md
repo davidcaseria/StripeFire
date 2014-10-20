@@ -17,7 +17,7 @@ Install the module: `npm install stripe-fire`
 Require in Node.js file:
 
 ```js
-var stripeFire = require('stripe-fire')('your stripe private key');
+var stripeFire = require("stripe-fire")("your Stripe private key");
 ```
 
 ## API Reference
@@ -26,10 +26,10 @@ A `StripeFire` object is used to store Firebase references for Stripe API object
 
 Each object accepts `ref`, `callback`, `accessToken`, and `alterRequest` parameters.
 
-- `ref` *(required)*: An instance of a Firebase object or a string that points to a Firebase reference
-- `callback` *(optional)*: A function which is called **after** a child is added to the specified reference *and* the API request is sent to Stripe; the function accepts two parameters: an error object and the Stripe object if the request is successful
-- `accessToken` *(optional)*: A string or function which returns an access token to be sent with the Stripe API request (used for Stripe Connect); the function accepts one parameter: the data set in the Firebase child
-- `alterRequest` *(optional)*: A function which is called **before** a request is sent to Stripe; the function accepts one parameter: the data set in the Firebase child
+- `ref` *(required)*: an instance of a Firebase object or a string that points to a Firebase reference
+- `callback` *(optional)*: a function which is called **after** a child is added to the specified reference *and* the API request is sent to Stripe; the function accepts two parameters: an error object and the Stripe object if the request is successful
+- `accessToken` *(optional)*: a string or function which returns an access token to be sent with the Stripe API request (used for Stripe Connect); the function accepts one parameter: the data set in the Firebase child
+- `alterRequest` *(optional)*: a function which is called **before** a request is sent to Stripe; the function accepts one parameter: the data set in the Firebase child
 
 The reference should contain children which are all similar Stripe objects. Note the children names can be anything so long as they exist in parent objects.
 For example, a refund child named `order1234` should have a corresponding charge child named `order1234`. This allows StripeFire to be agnostic about Stripe object ids.
@@ -37,12 +37,17 @@ For example, a refund child named `order1234` should have a corresponding charge
 After the API request is sent to Stripe the full Stripe object is stored at the same location where it was created (or an error object if an error occured).
 For child objects i.e. refunds, cards, subscriptions, etc., the reference is deleted after a successful response from Stripe and the parent object i.e. charges, customers, etc. is updated.
 
+The `callback`, `accessToken`, and `alterRequest` functions may be called with the `this` variable set with the following properties:
+- `accessToken`: the access token used in the request
+- `action`: create/update as appropriate
+- `childSnapshot`: the Firebase [DataSnapshot](https://www.firebase.com/docs/web/api/datasnapshot/) used to generate the request
+
 ### StripeFire(key)
 
 Creates a `StripeFire` object which can be used to store references.
 
 *Example:*
-```JavaScript
+```js
 //sk_test_BQokikJOvBiI2HlWgH4olfQ2 is the example Stripe private key
 var stripeFire = require("stripe-fire")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 ```
@@ -54,20 +59,27 @@ Initializes and returns a `Charges` object.
 *Example:*
 ```js
 var charges = stripeFire.charges("https://stripe-fire.firebaseio.com/charges", function(err, charge) {
-    // Called after a create charge request is sent to Stripe
+    // Called after a create/update charge request is sent to Stripe
 }, "ACCESS_TOKEN", function(chargeData) {
-    // Called before a create charge request is sent to Stripe
+    // Called before a create/update charge request is sent to Stripe
     return chargeData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var chargesRef = new Firebase("https://stripe-fire.firebaseio.com/charges");
+
+// Create a charge
 chargesRef.push({
     amount: 400,
     currency: "usd",
     card: "token"
+});
+
+// Update a charge
+chargesRef.child("ChargeName").update({
+    description: "Updating description"
 });
 ```
 
@@ -78,14 +90,14 @@ Initializes a `Refunds` object which is a descendant of the `Charges` object. Th
 *Example:*
 ```js
 charges.refunds("https://stripe-fire.firebaseio.com/refunds", function(err, refund) {
-    // Called after a create refund request is sent to Stripe
+    // Called after a create/update refund request is sent to Stripe
 }, "ACCESS_TOKEN", function(refundData) {
-    // Called before a create refund request is sent to Stripe
+    // Called before a create/update refund request is sent to Stripe
     return refundData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var refundsRef = new Firebase("https://stripe-fire.firebaseio.com/refunds");
 //"ChargeName" should exist as a child in the charges reference
@@ -101,20 +113,29 @@ Initializes a `Coupons` object.
 *Example:*
 ```js
 stripeFire.coupons("https://stripe-fire.firebaseio.com/coupons", function(err, coupon) {
-    // Called after a create coupon request is sent to Stripe
+    // Called after a create/update coupon request is sent to Stripe
 }, "ACCESS_TOKEN", function(couponData) {
-    // Called before a create coupon request is sent to Stripe
+    // Called before a create/update coupon request is sent to Stripe
     return couponData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var couponsRef = new Firebase("https://stripe-fire.firebaseio.com/coupons");
+
+// Create a coupon
 couponsRef.push({
     percent_off: 25,
     duration: "repeating",
     duration_in_months: 3
+});
+
+// Update a coupon
+couponsRef.child("CouponName").update({
+    metadata: {
+        key: 'value'
+    }
 });
 ```
 
@@ -125,18 +146,25 @@ Initializes and returns a `Customers` object.
 *Example:*
 ```js
 var customers = stripeFire.customers("https://stripe-fire.firebaseio.com/customers", function(err, customer) {
-    // Called after a create customer request is sent to Stripe
+    // Called after a create/update customer request is sent to Stripe
 }, "ACCESS_TOKEN", function(customerData) {
-    // Called before a create customer request is sent to Stripe
+    // Called before a create/update customer request is sent to Stripe
     return customerData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var customersRef = new Firebase("https://stripe-fire.firebaseio.com/customers");
+
+// Create a customer
 customersRef.push({
     card: "token"
+});
+
+// Update a customer
+customersRef.child("CustomerName").update({
+    description: "Updating description"
 });
 ```
 
@@ -147,14 +175,14 @@ Initializes a `Cards` object which is a descendant of the `Customers` object. Th
 *Example:*
 ```js
 customers.cards("https://stripe-fire.firebaseio.com/cards", function(err, card) {
-    // Called after a create card request is sent to Stripe
+    // Called after a create/update card request is sent to Stripe
 }, "ACCESS_TOKEN", function(cardData) {
-    // Called before a create card request is sent to Stripe
+    // Called before a create/update card request is sent to Stripe
     return cardData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var cardsRef = new Firebase("https://stripe-fire.firebaseio.com/cards");
 //"CustomerName" should exist as a child in the customers reference
@@ -170,14 +198,14 @@ Initializes a `Subscriptions` object which is a descendant of the `Customers` ob
 *Example:*
 ```js
 customers.subscriptions("https://stripe-fire.firebaseio.com/subscriptions", function(err, subscription) {
-    // Called after a create subscription request is sent to Stripe
+    // Called after a create/update subscription request is sent to Stripe
 }, "ACCESS_TOKEN", function(subscriptionData) {
-    // Called before a create subscription request is sent to Stripe
+    // Called before a create/update subscription request is sent to Stripe
     return subscriptionData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var subscriptionsRef = new Firebase("https://stripe-fire.firebaseio.com/subscriptions");
 //"CustomerName" should exist as a child in the customers reference
@@ -193,23 +221,32 @@ Initializes a `Plans` object.
 *Example:*
 ```js
 stripeFire.plans("https://stripe-fire.firebaseio.com/plans", function(err, plan) {
-    // Called after a create plan request is sent to Stripe
+    // Called after a create/update plan request is sent to Stripe
 }, "ACCESS_TOKEN", function(planData) {
-    // Called before a create plan request is sent to Stripe
+    // Called before a create/update plan request is sent to Stripe
     // IMPORTANT: since id is reserved for retrieving objects this cannot be set in Firebase before being sent to Stripe
     planData.id = planData.name;
     return planData;
 });
 ```
 
-*Client-Side Usage:*
+*Sample Client-Side Usage:*
 ```js
 var plansRef = new Firebase("https://stripe-fire.firebaseio.com/plans");
+
+// Create a plan
 plansRef.push({
     amount: 2000,
     interval: "month",
     name: "name",
     currency: "usd"
+});
+
+// Update a plan
+plansRef.child("PlanName").update({
+    metadata: {
+        key: 'value'
+    }
 });
 ```
 
@@ -227,7 +264,7 @@ A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate
 
 ## Contributing
 
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
+Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
 
 
 ## License

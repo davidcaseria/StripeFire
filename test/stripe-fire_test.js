@@ -138,6 +138,19 @@ describe('StripeFire', function() {
             });
         });
         
+        it('should delete a coupon', function(done) {
+            stripeFire.coupons('https://stripe-fire.firebaseio.com/coupons/test-3', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-3/' + this.childSnapshot.name());
+                    ref.remove();
+                } else if(this.action === 'delete') {
+                    done();
+                }
+            });
+        });
+        
     });
     
     describe('Customers', function() {
@@ -176,14 +189,27 @@ describe('StripeFire', function() {
             });
         });
         
+        it('should delete a customer', function(done) {
+            stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-3', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-3/' + this.childSnapshot.name());
+                    ref.remove();
+                } else if(this.action === 'delete') {
+                    done();
+                }
+            });
+        });
+        
         describe('Cards', function() {
             
             it('should create a card for a customer', function(done) {
-                var customers = stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-3', function(err) {
+                var customers = stripeFire.customers('https://stripe-fire.firebaseio.com/customers/test-4', function(err) {
                     if(err) {
                         done(err);
                     } else if (this.action === 'create') {
-                        var ref = new Firebase('https://stripe-fire.firebaseio.com/cards/test-3/' + this.childSnapshot.name());
+                        var ref = new Firebase('https://stripe-fire.firebaseio.com/cards/test-4/' + this.childSnapshot.name());
                         createToken(function(err, token) {
                             if(err) {
                                 done(err);
@@ -194,7 +220,7 @@ describe('StripeFire', function() {
                                     if(err) {
                                         done(err);
                                     } else {
-                                        customers.cards('https://stripe-fire.firebaseio.com/cards/test-3', done);
+                                        customers.cards('https://stripe-fire.firebaseio.com/cards/test-4', done);
                                     }
                                 });
                             }
@@ -241,6 +267,22 @@ describe('StripeFire', function() {
                         }
                     });
                 } else if(this.action === 'update') {
+                    done();
+                }
+            }, null, function(plan) {
+                plan.id = plan.name;
+                return plan;
+            });
+        });
+        
+        it('should delete a plan', function(done) {
+            stripeFire.plans('https://stripe-fire.firebaseio.com/plans/test-3', function(err) {
+                if(err) {
+                    done(err);
+                } else if (this.action === 'create') {
+                    var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-3/' + this.childSnapshot.name());
+                    ref.remove();
+                } else if(this.action === 'delete') {
                     done();
                 }
             }, null, function(plan) {

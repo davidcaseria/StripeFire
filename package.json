@@ -4,14 +4,14 @@
   "main": "lib/stripe-fire.js",
   "description": "A Node.js module that handles Stripe API calls for Firebase references.",
   "homepage": "https://github.com/davidcaseria/StripeFire",
-  "bugs": "https://github.com/davidcaseria/stripe-fire/issues",
+  "bugs": "https://github.com/davidcaseria/StripeFire/issues",
   "author": {
     "name": "Dave",
     "email": "davidcaseria@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/davidcaseria/stripe-fire"
+    "url": "https://github.com/davidcaseria/StripeFire"
   },
   "license": "MIT",
   "files": [

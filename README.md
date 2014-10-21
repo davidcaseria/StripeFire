@@ -39,7 +39,7 @@ For child objects i.e. refunds, cards, subscriptions, etc., the reference is del
 
 The `callback`, `accessToken`, and `alterRequest` functions may be called with the `this` variable set with the following properties:
 - `accessToken`: the access token used in the request
-- `action`: create/update as appropriate
+- `action`: create/delete/update as appropriate
 - `childSnapshot`: the Firebase [DataSnapshot](https://www.firebase.com/docs/web/api/datasnapshot/) used to generate the request
 
 ### StripeFire(key)
@@ -113,7 +113,7 @@ Initializes a `Coupons` object.
 *Example:*
 ```js
 stripeFire.coupons("https://stripe-fire.firebaseio.com/coupons", function(err, coupon) {
-    // Called after a create/update coupon request is sent to Stripe
+    // Called after a create/delete/update coupon request is sent to Stripe
 }, "ACCESS_TOKEN", function(couponData) {
     // Called before a create/update coupon request is sent to Stripe
     return couponData;
@@ -146,7 +146,7 @@ Initializes and returns a `Customers` object.
 *Example:*
 ```js
 var customers = stripeFire.customers("https://stripe-fire.firebaseio.com/customers", function(err, customer) {
-    // Called after a create/update customer request is sent to Stripe
+    // Called after a create/delete/update customer request is sent to Stripe
 }, "ACCESS_TOKEN", function(customerData) {
     // Called before a create/update customer request is sent to Stripe
     return customerData;
@@ -221,7 +221,7 @@ Initializes a `Plans` object.
 *Example:*
 ```js
 stripeFire.plans("https://stripe-fire.firebaseio.com/plans", function(err, plan) {
-    // Called after a create/update plan request is sent to Stripe
+    // Called after a create/delete/update plan request is sent to Stripe
 }, "ACCESS_TOKEN", function(planData) {
     // Called before a create/update plan request is sent to Stripe
     // IMPORTANT: since id is reserved for retrieving objects this cannot be set in Firebase before being sent to Stripe
@@ -265,6 +265,35 @@ A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate
 ## Contributing
 
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
+
+
+## License
+
+Copyright (c) 2014 David Caseria
+Licensed under the MIT license.
+an
+plansRef.child("PlanName").update({
+    metadata: {
+        key: 'value'
+    }
+});
+```
+
+
+## Security Reference
+
+Make sure to secure Firebase with the proper rules to protect the Stripe data. Checkout the [Firebase Security API](https://www.firebase.com/docs/security/) for more details.
+
+To easily get started building Firebase rules you can use the [Blaze Security Compiler](https://www.firebase.com/docs/security/).
+
+Install the Blaze Security Compiler with: `npm install -g blaze_compiler`
+
+A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate.
+
+
+## Contributing
+
+In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
 
 
 ## License

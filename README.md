@@ -38,6 +38,7 @@ After the API request is sent to Stripe the full Stripe object is stored at the 
 For child objects i.e. refunds, cards, subscriptions, etc., the reference is deleted after a successful response from Stripe and the parent object i.e. charges, customers, etc. is updated.
 
 The `callback`, `accessToken`, and `alterRequest` functions may be called with the `this` variable set with the following properties:
+
 - `accessToken`: the access token used in the request
 - `action`: create/delete/update as appropriate
 - `childSnapshot`: the Firebase [DataSnapshot](https://www.firebase.com/docs/web/api/datasnapshot/) used to generate the request
@@ -134,7 +135,7 @@ couponsRef.push({
 // Update a coupon
 couponsRef.child("CouponName").update({
     metadata: {
-        key: 'value'
+        key: "value"
     }
 });
 ```
@@ -245,7 +246,7 @@ plansRef.push({
 // Update a plan
 plansRef.child("PlanName").update({
     metadata: {
-        key: 'value'
+        key: "value"
     }
 });
 ```

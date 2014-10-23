@@ -1,6 +1,6 @@
 {
   "name": "stripe-fire",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "lib/stripe-fire.js",
   "description": "A Node.js module that handles Stripe API calls for Firebase references.",
   "homepage": "https://github.com/davidcaseria/StripeFire",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "firebase": "~1.1.2",
-    "stripe": "^2.8.0",
+    "stripe": "~2.8.0",
     "hash-object": "~0.1.7"
   }
 }

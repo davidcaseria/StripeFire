@@ -38,6 +38,7 @@ After the API request is sent to Stripe the full Stripe object is stored at the 
 For child objects i.e. refunds, cards, subscriptions, etc., the reference is deleted after a successful response from Stripe and the parent object i.e. charges, customers, etc. is updated.
 
 The `callback`, `accessToken`, and `alterRequest` functions may be called with the `this` variable set with the following properties:
+
 - `accessToken`: the access token used in the request
 - `action`: create/delete/update as appropriate
 - `childSnapshot`: the Firebase [DataSnapshot](https://www.firebase.com/docs/web/api/datasnapshot/) used to generate the request
@@ -134,7 +135,7 @@ couponsRef.push({
 // Update a coupon
 couponsRef.child("CouponName").update({
     metadata: {
-        key: 'value'
+        key: "value"
     }
 });
 ```
@@ -245,36 +246,7 @@ plansRef.push({
 // Update a plan
 plansRef.child("PlanName").update({
     metadata: {
-        key: 'value'
-    }
-});
-```
-
-
-## Security Reference
-
-Make sure to secure Firebase with the proper rules to protect the Stripe data. Checkout the [Firebase Security API](https://www.firebase.com/docs/security/) for more details.
-
-To easily get started building Firebase rules you can use the [Blaze Security Compiler](https://www.firebase.com/docs/security/).
-
-Install the Blaze Security Compiler with: `npm install -g blaze_compiler`
-
-A sample [rules.yml](security/rules.yml) file has been provided as a boilerplate.
-
-
-## Contributing
-
-Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com).
-
-
-## License
-
-Copyright (c) 2014 David Caseria
-Licensed under the MIT license.
-an
-plansRef.child("PlanName").update({
-    metadata: {
-        key: 'value'
+        key: "value"
     }
 });
 ```

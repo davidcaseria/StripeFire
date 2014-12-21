@@ -56,7 +56,7 @@ module.exports = function (grunt) {
         commitFiles: ['package.json', 'CHANGELOG.md'],
         createTag: true,
         tagName: 'v%VERSION%',
-        tagMessage: '[CHANGELOG](CHANGELOG.md#%VERSION%)',
+        tagMessage: '<a href="CHANGELOG.md#%VERSION%">CHANGELOG</a>',
         push: true,
         pushTo: 'origin',
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',

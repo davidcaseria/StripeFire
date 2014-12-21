@@ -69,7 +69,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/charges/test-2/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/charges/test-2/' + this.childSnapshot.key());
           ref.update({
             description: 'Updating description'
           });
@@ -86,7 +86,7 @@ describe('StripeFire', function () {
           if (err) {
             done(err);
           } else if (this.action === 'create') {
-            var ref = new Firebase('https://stripe-fire.firebaseio.com/refunds/test-3/' + this.childSnapshot.name());
+            var ref = new Firebase('https://stripe-fire.firebaseio.com/refunds/test-3/' + this.childSnapshot.key());
             ref.set({
               amount: 400
             }, function (err) {
@@ -126,7 +126,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-2/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-2/' + this.childSnapshot.key());
           ref.update({
             metadata: {
               key: 'value'
@@ -143,7 +143,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-3/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/coupons/test-3/' + this.childSnapshot.key());
           ref.remove();
         } else if (this.action === 'delete') {
           done();
@@ -179,7 +179,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-2/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-2/' + this.childSnapshot.key());
           ref.update({
             description: 'Updating description'
           });
@@ -194,7 +194,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-3/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/customers/test-3/' + this.childSnapshot.key());
           ref.remove();
         } else if (this.action === 'delete') {
           done();
@@ -209,7 +209,7 @@ describe('StripeFire', function () {
           if (err) {
             done(err);
           } else if (this.action === 'create') {
-            var ref = new Firebase('https://stripe-fire.firebaseio.com/cards/test-4/' + this.childSnapshot.name());
+            var ref = new Firebase('https://stripe-fire.firebaseio.com/cards/test-4/' + this.childSnapshot.key());
             createToken(function (err, token) {
               if (err) {
                 done(err);
@@ -243,7 +243,7 @@ describe('StripeFire', function () {
       planRef.set({
         amount: 2000,
         interval: 'month',
-        name: planRef.name(),
+        name: planRef.key(),
         currency: 'usd'
       }, done);
     });
@@ -260,7 +260,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-2/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-2/' + this.childSnapshot.key());
           ref.update({
             metadata: {
               key: 'value'
@@ -280,7 +280,7 @@ describe('StripeFire', function () {
         if (err) {
           done(err);
         } else if (this.action === 'create') {
-          var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-3/' + this.childSnapshot.name());
+          var ref = new Firebase('https://stripe-fire.firebaseio.com/plans/test-3/' + this.childSnapshot.key());
           ref.remove();
         } else if (this.action === 'delete') {
           done();

@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   // Load all grunt tasks
   require('load-grunt-tasks')(grunt);
 
-  // Project configuration.
+  // Project configuration
   grunt.initConfig({
     nodeunit: {
       files: ['test/**/*_test.js']
@@ -46,9 +46,34 @@ module.exports = function (grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'mochacli']
       }
+    },
+    bump: {
+      options: {
+        files: ['package.json'],
+        updateConfigs: [],
+        commit: true,
+        commitMessage: 'release v%VERSION%',
+        commitFiles: ['package.json', 'CHANGELOG.md'],
+        createTag: true,
+        tagName: 'v%VERSION%',
+        tagMessage: '[CHANGELOG](CHANGELOG.md#%VERSION%)',
+        push: true,
+        pushTo: 'origin',
+        gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+        globalReplace: false
+      }
+    },
+    changelog: {
+      options: {}
     }
   });
 
-  // Default task.
+  // Default task
   grunt.registerTask('default', ['jshint', 'mochacli']);
+  
+  // Release tasks
+  grunt.registerTask('release', ['bump-only', 'changelog', 'bump-commit']);
+  grunt.registerTask('release:patch', ['bump-only', 'changelog', 'bump-commit']);
+  grunt.registerTask('release:minor', ['bump-only:minor', 'changelog', 'bump-commit']);
+  grunt.registerTask('release:major', ['bump-only:major', 'changelog', 'bump-commit']);
 };

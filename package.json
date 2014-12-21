@@ -25,21 +25,23 @@
     "credit cards"
   ],
   "devDependencies": {
+    "chai": "~1.9.2",
+    "grunt-bump": "0.0.16",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-nodeunit": "^0.3.3",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-conventional-changelog": "^1.1.0",
     "grunt-mocha-cli": "^1.9.0",
     "jshint-stylish": "^0.2.0",
     "load-grunt-tasks": "^0.4.0",
-    "time-grunt": "^0.3.1",
-    "chai": "~1.9.2"
+    "time-grunt": "^0.3.1"
   },
   "scripts": {
     "test": "grunt"
   },
   "dependencies": {
-    "firebase": "~1.1.2",
-    "stripe": "~2.8.0",
-    "hash-object": "~0.1.7"
+    "firebase": "^2.0.6",
+    "hash-object": "~0.1.7",
+    "stripe": "~2.8.0"
   }
 }

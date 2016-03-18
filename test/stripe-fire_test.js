@@ -11,8 +11,8 @@ var createToken = function (callback) {
     card: {
       number: '4242424242424242',
       exp_month: 12,
-      exp_year: 2015,
-      cvc: '123'
+      exp_year: 2020,
+      cvc: 123
     }
   }, callback);
 };
